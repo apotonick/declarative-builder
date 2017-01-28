@@ -4,5 +4,3 @@ source 'https://rubygems.org'
 gemspec
 
 gem "minitest-line"
-
-gem "declarative-option", path: "../declarative-option"

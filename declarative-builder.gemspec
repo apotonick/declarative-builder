@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Declarative::Builder::VERSION
 
-  gem.add_dependency "declarative-option", ">= 0.1.0", "< 0.2.0"
+  gem.add_dependency "declarative-option", "< 0.2.0"
 
   gem.add_development_dependency "rake"
   gem.add_development_dependency "minitest"

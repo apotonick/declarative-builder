@@ -17,7 +17,7 @@ module Declarative
       end
 
       def <<(proc)
-        super Declarative::Option( proc, instance_exec: true )
+        super Declarative::Option( proc, instance_exec: true ) # lambdas are always instance_exec'ed.
       end
     end
 
@@ -39,3 +39,6 @@ module Declarative
     end
   end
 end
+
+
+# Declarative::Builder(->(options) { options[:current_user] ? Bla : Blubb  })
