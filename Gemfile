@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem "minitest-line"
+gem "declarative-option", github: 'yogeshjain999/declarative-option', branch: 'ruby-3'

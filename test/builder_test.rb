@@ -8,7 +8,7 @@ class BuilderTest < MiniTest::Spec
   class Song
     include Declarative::Builder
 
-    builds do |options|
+    builds do |options, **|
       if options[:evergreen]
         Evergreen
       elsif options[:hit]
@@ -31,11 +31,11 @@ class BuilderTest < MiniTest::Spec
   class Track
     include Declarative::Builder
 
-    builds do |options|
+    builds do |options, **|
       Evergreen if options[:evergreen]
     end
 
-    builds do |options|
+    builds do |options, **|
       Hit if options[:hit]
     end
 
@@ -61,7 +61,7 @@ class BuilderTest < MiniTest::Spec
   class Boomerang
     include Declarative::Builder
 
-    builds ->(options) do
+    builds ->(options, **) do
       return Song if options[:hit]
     end
 
@@ -76,7 +76,7 @@ end
 
 
 class BuilderScopeTest < MiniTest::Spec
-  def self.builder_method(options)
+  def self.builder_method(options, **)
     options[:from_builder_method] and return self
   end
 
@@ -89,7 +89,7 @@ class BuilderScopeTest < MiniTest::Spec
     include Declarative::Builder
 
     builds :builder_method # i get called first.
-    builds ->(options) do  # and i second.
+    builds ->(options, **) do  # and i second.
       self::Hit
     end
 
@@ -120,7 +120,7 @@ class BuilderScopeTest < MiniTest::Spec
       build!(context, options)
     end
 
-    def self.builder_method(options)
+    def self.builder_method(options, **)
       options[:from_builder_method] and return self
     end
   end
@@ -138,7 +138,7 @@ class BuilderScopeTest < MiniTest::Spec
   # Builders#<<
   A = Class.new
   MyBuilders = Declarative::Builder::Builders.new
-  MyBuilders << ->(options) do
+  MyBuilders << ->(options, **) do
     return Song if options[:hit]
   end
 

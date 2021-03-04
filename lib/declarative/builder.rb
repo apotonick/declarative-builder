@@ -8,9 +8,9 @@ module Declarative
     end
 
     class Builders < Array
-      def call(context, *args)
+      def call(context, *args, **options)
         each do |block|
-          klass = block.(context, *args) and return klass # Declarative::Option#call()
+          klass = block.(context, *args, keyword_arguments: options.to_hash) and return klass # Declarative::Option#call()
         end
 
         context
@@ -33,8 +33,8 @@ module Declarative
 
     module Build
       # Call this from your class to compute the concrete target class.
-      def build!(context, *args)
-        builders.(context, *args)
+      def build!(context, *args, **options)
+        builders.(context, *args, **options)
       end
     end
   end
