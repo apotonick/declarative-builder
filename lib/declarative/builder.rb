@@ -1,4 +1,4 @@
-require "declarative/option"
+require "trailblazer/option"
 
 module Declarative
   module Builder
@@ -8,16 +8,16 @@ module Declarative
     end
 
     class Builders < Array
-      def call(context, *args)
+      def call(context, *args, **options)
         each do |block|
-          klass = block.(context, *args) and return klass # Declarative::Option#call()
+          klass = block.(*args, exec_context: context, keyword_arguments: options) and return klass # Trailblazer::Option#call()
         end
 
         context
       end
 
       def <<(proc)
-        super Declarative::Option( proc, instance_exec: true ) # lambdas are always instance_exec'ed.
+        super Trailblazer::Option( proc )
       end
     end
 
@@ -33,8 +33,8 @@ module Declarative
 
     module Build
       # Call this from your class to compute the concrete target class.
-      def build!(context, *args)
-        builders.(context, *args)
+      def build!(context, *args, **options)
+        builders.(context, *args, **options)
       end
     end
   end
